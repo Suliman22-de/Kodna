@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تعلم البرمجة بالعربية</title>
+  <title>تطبيق تعلم البرمجة</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app">
     <h1>تعلم البرمجة بالعربية</h1>
-    <p class="intro">دروس سهلة للمبتدئين مع اختبار نهائي وشهادة إتمام.</p>
+    <p class="intro">اختبار تدريبي من 50 سؤالًا مع نتيجة وشهادة ومنطقة تطبيق عملي.</p>
 
     <section class="card" id="nameBox">
       <label for="studentName">اسم المتعلم:</label>
@@ -17,6 +17,7 @@
     </section>
 
     <section class="card" id="lessonBox">
+      <p class="progress" id="progressText"></p>
       <h2 id="lessonTitle"></h2>
       <p id="lessonText"></p>
 
@@ -34,7 +35,7 @@
       <p id="result"></p>
     </section>
 
-    <button id="nextButton">الدرس التالي</button>
+    <button id="nextButton">السؤال التالي</button>
 
     <section class="card final-result" id="finalResult">
       <h2>النتيجة النهائية</h2>
@@ -43,6 +44,15 @@
       <p>النسبة: <strong id="finalPercent"></strong></p>
       <p id="finalMessage"></p>
       <button id="restartButton">إعادة الاختبار</button>
+    </section>
+
+    <section class="card practice-lab" id="practiceLab">
+      <h2>منطقة التطبيق العملي</h2>
+      <p>بعد الانتهاء من الأسئلة، جرّب كتابة كود JavaScript هنا وشغّله بنفسك.</p>
+
+      <textarea id="codeEditor" placeholder='مثال: alert("مرحبا");'></textarea>
+      <button id="runCodeButton">تشغيل الكود</button>
+      <pre id="codeOutput">النتيجة ستظهر هنا</pre>
     </section>
 
     <section class="certificate-section" id="certificateSection">
