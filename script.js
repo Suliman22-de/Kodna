@@ -52,8 +52,8 @@ const lessons = [
 ];
 
 let current = 0;
-let score = 0;
-let answered = false;
+let selectedAnswers = [];
+let answerChoices = [];
 
 const studentName = document.getElementById("studentName");
 const nameBox = document.getElementById("nameBox");
@@ -67,7 +67,12 @@ const codeExplain = document.getElementById("codeExplain");
 const question = document.getElementById("question");
 const answers = document.getElementById("answers");
 const result = document.getElementById("result");
+
+const prevButton = document.getElementById("prevButton");
+const clearAnswerButton = document.getElementById("clearAnswerButton");
 const nextButton = document.getElementById("nextButton");
+const quizButtons = document.querySelector(".quiz-buttons");
+
 const finalResult = document.getElementById("finalResult");
 const restartButton = document.getElementById("restartButton");
 const practiceLab = document.getElementById("practiceLab");
@@ -89,10 +94,17 @@ function shuffleArray(array) {
   return newArray;
 }
 
+function getCurrentAnswers() {
+  if (!answerChoices[current]) {
+    answerChoices[current] = shuffleArray(lessons[current].answers);
+  }
+
+  return answerChoices[current];
+}
+
 function showLesson() {
   const lesson = lessons[current];
 
-  answered = false;
   progressText.textContent = "السؤال " + (current + 1) + " من " + lessons.length;
   lessonTitle.textContent = lesson.title;
   lessonText.textContent = lesson.text;
@@ -102,44 +114,31 @@ function showLesson() {
   result.textContent = "";
   answers.innerHTML = "";
 
-  const randomAnswers = shuffleArray(lesson.answers);
+  const randomAnswers = getCurrentAnswers();
 
   randomAnswers.forEach(function(answer) {
     const button = document.createElement("button");
     button.textContent = answer;
 
+    if (selectedAnswers[current] === answer) {
+      button.classList.add("answer-selected");
+    }
+
     button.addEventListener("click", function() {
-      checkAnswer(answer, button);
+      selectedAnswers[current] = answer;
+      showLesson();
+      result.textContent = "تم تسجيل إجابتك. يمكنك تغييرها أو إلغاؤها.";
     });
 
     answers.appendChild(button);
   });
 
+  prevButton.disabled = current === 0;
   nextButton.textContent = current === lessons.length - 1 ? "عرض النتيجة" : "السؤال التالي";
 }
 
-function checkAnswer(answer, selectedButton) {
-  if (answered) {
-    return;
-  }
-
-  answered = true;
-  selectedButton.classList.add("answer-selected");
-
-  if (answer === lessons[current].correct) {
-    score = score + 1;
-  }
-
-  result.textContent = "تم تسجيل إجابتك.";
-
-  const buttons = answers.querySelectorAll("button");
-  buttons.forEach(function(button) {
-    button.disabled = true;
-  });
-}
-
 function nextLesson() {
-  if (!answered) {
+  if (!selectedAnswers[current]) {
     result.textContent = "اختر إجابة أولًا.";
     return;
   }
@@ -153,14 +152,40 @@ function nextLesson() {
   showLesson();
 }
 
+function previousLesson() {
+  if (current > 0) {
+    current = current - 1;
+    showLesson();
+  }
+}
+
+function clearAnswer() {
+  selectedAnswers[current] = null;
+  showLesson();
+  result.textContent = "تم إلغاء الإجابة.";
+}
+
+function calculateScore() {
+  let score = 0;
+
+  lessons.forEach(function(lesson, index) {
+    if (selectedAnswers[index] === lesson.correct) {
+      score = score + 1;
+    }
+  });
+
+  return score;
+}
+
 function showFinalResult() {
   const name = studentName.value.trim() || "المتعلم";
+  const score = calculateScore();
   const percent = Math.round((score / lessons.length) * 100);
 
   nameBox.style.display = "none";
   lessonBox.style.display = "none";
   quizBox.style.display = "none";
-  nextButton.style.display = "none";
+  quizButtons.style.display = "none";
 
   document.getElementById("finalName").textContent = name;
   document.getElementById("finalScore").textContent = score + " / " + lessons.length;
@@ -168,7 +193,7 @@ function showFinalResult() {
 
   if (percent >= 70) {
     document.getElementById("finalMessage").textContent = "مبروك، نجحت ويمكنك الحصول على الشهادة.";
-    showCertificate(name);
+    showCertificate(name, score);
   } else {
     document.getElementById("finalMessage").textContent = "تحتاج إلى مراجعة الدروس والمحاولة مرة أخرى.";
   }
@@ -178,7 +203,7 @@ function showFinalResult() {
   finalResult.scrollIntoView({ behavior: "smooth" });
 }
 
-function showCertificate(name) {
+function showCertificate(name, score) {
   const today = new Date().toLocaleDateString("ar");
 
   document.getElementById("certificateName").textContent = name;
@@ -189,13 +214,13 @@ function showCertificate(name) {
 
 function restartQuiz() {
   current = 0;
-  score = 0;
-  answered = false;
+  selectedAnswers = [];
+  answerChoices = [];
 
   nameBox.style.display = "block";
   lessonBox.style.display = "block";
   quizBox.style.display = "block";
-  nextButton.style.display = "inline-block";
+  quizButtons.style.display = "flex";
   finalResult.style.display = "none";
   practiceLab.style.display = "none";
   document.getElementById("certificateSection").style.display = "none";
@@ -207,7 +232,7 @@ function openPracticeOnly() {
   nameBox.style.display = "none";
   lessonBox.style.display = "none";
   quizBox.style.display = "none";
-  nextButton.style.display = "none";
+  quizButtons.style.display = "none";
   finalResult.style.display = "none";
   document.getElementById("certificateSection").style.display = "none";
 
@@ -233,13 +258,16 @@ runCodeButton.addEventListener("click", function() {
   }
 });
 
+prevButton.addEventListener("click", previousLesson);
+clearAnswerButton.addEventListener("click", clearAnswer);
 nextButton.addEventListener("click", nextLesson);
 restartButton.addEventListener("click", restartQuiz);
+
 printButton.addEventListener("click", function() {
   window.print();
 });
 
-if (window.location.hash === "#practice") {
+if (window.location.hash === "#practice" || window.location.hash === "#practiceLab") {
   openPracticeOnly();
 } else {
   showLesson();
