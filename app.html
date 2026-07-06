@@ -20,10 +20,8 @@
       <p class="progress" id="progressText"></p>
       <h2 id="lessonTitle"></h2>
       <p id="lessonText"></p>
-
       <h3>مثال الكود:</h3>
       <pre><code id="lessonCode"></code></pre>
-
       <h3>شرح الكود:</h3>
       <p id="codeExplain"></p>
     </section>
@@ -35,7 +33,11 @@
       <p id="result"></p>
     </section>
 
-    <button id="nextButton">السؤال التالي</button>
+    <div class="quiz-buttons">
+      <button id="prevButton">السؤال السابق</button>
+      <button id="clearAnswerButton">إلغاء الإجابة</button>
+      <button id="nextButton">السؤال التالي</button>
+    </div>
 
     <section class="card final-result" id="finalResult">
       <h2>النتيجة النهائية</h2>
@@ -44,13 +46,13 @@
       <p>النسبة: <strong id="finalPercent"></strong></p>
       <p id="finalMessage"></p>
       <button id="restartButton">إعادة الاختبار</button>
+      <a class="home-link" href="index.html">العودة إلى الصفحة الرئيسية</a>
     </section>
 
     <section class="card practice-lab" id="practiceLab">
       <h2>منطقة التطبيق العملي</h2>
       <p>بعد الانتهاء من الأسئلة، جرّب كتابة كود JavaScript هنا وشغّله بنفسك.</p>
-
-      <textarea id="codeEditor" placeholder='مثال: alert("مرحبا");'></textarea>
+      <textarea id="codeEditor" placeholder='مثال: output("مرحبا");'></textarea>
       <button id="runCodeButton">تشغيل الكود</button>
       <pre id="codeOutput">النتيجة ستظهر هنا</pre>
     </section>
@@ -63,17 +65,16 @@
           <p class="certificate-text">تشهد المنصة بأن المتعلم</p>
           <h3 id="certificateName">اسم المتعلم</h3>
           <p class="certificate-text">قد أتم دورة أساسيات البرمجة للمبتدئين بنجاح</p>
-
           <div class="certificate-info">
             <p>النتيجة: <span id="certificateScore"></span></p>
             <p>التاريخ: <span id="certificateDate"></span></p>
           </div>
-
           <p class="signature">إدارة المنصة</p>
         </div>
       </div>
 
       <button id="printButton">طباعة الشهادة</button>
+      <a class="home-link" href="index.html">العودة إلى الصفحة الرئيسية</a>
     </section>
   </main>
 
