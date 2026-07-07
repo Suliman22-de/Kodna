@@ -3,13 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تطبيق تعلم البرمجة</title>
+  <title>كودنا | الاختبار التفاعلي</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app">
-    <h1>تعلم البرمجة بالعربية</h1>
-    <p class="intro">اختبار تدريبي من 50 سؤالًا مع نتيجة وشهادة ومنطقة تطبيق عملي.</p>
+    <header class="app-header">
+      <a class="brand" href="index.html">
+        <span class="brand-logo">{ }</span>
+        <span class="brand-text">كودنا</span>
+      </a>
+    </header>
+
+    <h1>اختبار كودنا التفاعلي</h1>
+    <p class="intro">اختبار تدريبي مع نتيجة وشهادة ومنطقة تطبيق عملي.</p>
 
     <section class="card" id="nameBox">
       <label for="studentName">اسم المتعلم:</label>
@@ -20,8 +27,10 @@
       <p class="progress" id="progressText"></p>
       <h2 id="lessonTitle"></h2>
       <p id="lessonText"></p>
+
       <h3>مثال الكود:</h3>
       <pre><code id="lessonCode"></code></pre>
+
       <h3>شرح الكود:</h3>
       <p id="codeExplain"></p>
     </section>
@@ -51,7 +60,7 @@
 
     <section class="card practice-lab" id="practiceLab">
       <h2>منطقة التطبيق العملي</h2>
-      <p>بعد الانتهاء من الأسئلة، جرّب كتابة كود JavaScript هنا وشغّله بنفسك.</p>
+      <p>جرّب كتابة كود JavaScript هنا وشغّله بنفسك.</p>
       <textarea id="codeEditor" placeholder='مثال: output("مرحبا");'></textarea>
       <button id="runCodeButton">تشغيل الكود</button>
       <pre id="codeOutput">النتيجة ستظهر هنا</pre>
@@ -60,16 +69,18 @@
     <section class="certificate-section" id="certificateSection">
       <div class="certificate">
         <div class="certificate-border">
-          <p class="certificate-small">منصة تعلم البرمجة بالعربية</p>
+          <p class="certificate-small">منصة كودنا</p>
           <h2>شهادة إتمام</h2>
-          <p class="certificate-text">تشهد المنصة بأن المتعلم</p>
+          <p class="certificate-text">تشهد منصة كودنا بأن المتعلم</p>
           <h3 id="certificateName">اسم المتعلم</h3>
           <p class="certificate-text">قد أتم دورة أساسيات البرمجة للمبتدئين بنجاح</p>
+
           <div class="certificate-info">
             <p>النتيجة: <span id="certificateScore"></span></p>
             <p>التاريخ: <span id="certificateDate"></span></p>
           </div>
-          <p class="signature">إدارة المنصة</p>
+
+          <p class="signature">إدارة كودنا</p>
         </div>
       </div>
 
